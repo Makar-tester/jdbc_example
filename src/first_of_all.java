@@ -40,5 +40,26 @@ public class first_of_all {
         }
 
     }
+    private static void preparedStatement(){
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/eshop?serverTimezone=UTC", "root", "Asassin2305")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where id=?");
+            preparedStatement.setInt(1,1);
+            preparedStatement.execute();
+            ResultSet resultSet= preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+
+                System.out.println("\n=================\n");
+                System.out.println("id: " + id);
+                System.out.println("name: " + name);
+                System.out.println("email: " + email);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
